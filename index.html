@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabke Sapne</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f8ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+    }
+
+    h2 {
+        color: #333;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .input-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        flex: 1;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #taskList {
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .task {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
+
+    .task span {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .task button {
+        margin-left: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .completed {
+        text-decoration: line-through;
+        color: #888;
+    }
+</style>
+</head>
+<body>
+<h2>Welcome to Sabke Sapne! Share Your Dreams and Watch Them Come True</h2>
+<div class="input-container">
+    <input type="text" id="taskInput" placeholder="Enter your dream...">
+    <button onclick="addTask()">Add</button>
+</div>
+
+<div id="taskList"></div>
+
+<script>
+    let tasks = [];
+
+    function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskValue = taskInput.value.trim();
+
+        if (taskValue !== "") {
+            tasks.push({ text: taskValue, completed: false });
+            taskInput.value = "";
+            displayTasks();
+        }
+    }
+
+    function removeTask(index) {
+        tasks.splice(index, 1);
+        displayTasks();
+    }
+
+    function completeTask(index) {
+        tasks[index].completed = !tasks[index].completed;
+        displayTasks();
+    }
+
+    function displayTasks() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+            const taskElement = document.createElement("div");
+            taskElement.className = "task";
+            taskElement.innerHTML = `
+                <span class="${task.completed ? 'completed' : ''}">${index + 1}. ${task.text}</span>
+                <button onclick="completeTask(${index})">Complete</button>
+                <button onclick="removeTask(${index})">Remove</button>`;
+            taskList.appendChild(taskElement);
+        });
+    }
+
+    displayTasks();
+</script>
+</body>
+</html>
